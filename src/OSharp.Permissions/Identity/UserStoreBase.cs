@@ -401,8 +401,15 @@ namespace OSharp.Identity
 
             TUserKey userId = _userLoginRepository.TrackQuery(m => m.LoginProvider == loginProvider && m.ProviderKey == providerKey)
                 .Select(m => m.UserId).FirstOrDefault();
-            TUser user = _userRepository.Get(userId);
-            return Task.FromResult(user);
+            if (default(TUserKey).Equals(userId))
+            {
+                return Task.FromResult(default(TUser));
+            }
+            else
+            {
+                TUser user = _userRepository.Get(userId);
+                return Task.FromResult(user);
+            }
         }
 
         #endregion
