@@ -313,7 +313,7 @@ namespace OSharp.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            return Task.FromResult(_userRepository.Query().FirstOrDefault(m => m.NormalizedUserName == normalizedUserName));
+            return Task.FromResult(_userRepository.TrackQuery().FirstOrDefault(m => m.NormalizedUserName == normalizedUserName));
         }
 
         #endregion
@@ -401,15 +401,12 @@ namespace OSharp.Identity
 
             TUserKey userId = _userLoginRepository.TrackQuery(m => m.LoginProvider == loginProvider && m.ProviderKey == providerKey)
                 .Select(m => m.UserId).FirstOrDefault();
-            if (default(TUserKey).Equals(userId))
+            if (Equals(userId, default(TUserKey)))
             {
                 return Task.FromResult(default(TUser));
             }
-            else
-            {
-                TUser user = _userRepository.Get(userId);
-                return Task.FromResult(user);
-            }
+            TUser user = _userRepository.Get(userId);
+            return Task.FromResult(user);
         }
 
         #endregion
