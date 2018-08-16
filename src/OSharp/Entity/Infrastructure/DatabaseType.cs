@@ -25,6 +25,10 @@ namespace OSharp.Entity
         /// <summary>
         /// MySql数据库类型
         /// </summary>
-        MySql
+        MySql,
+        /// <summary>
+        /// PostgreSQL数据库类型
+        /// </summary>
+        PostgreSQL
     }
 }

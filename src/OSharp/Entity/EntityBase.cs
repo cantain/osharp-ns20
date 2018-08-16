@@ -9,7 +9,8 @@
 
 using System;
 using System.ComponentModel;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using OSharp.Data;
 using OSharp.Extensions;
 using OSharp.Reflection;
@@ -37,6 +38,7 @@ namespace OSharp.Entity
         /// 获取或设置 编号
         /// </summary>
         [DisplayName("编号")]
+        [Key]
         public TKey Id { get; set; }
 
         /// <summary>
